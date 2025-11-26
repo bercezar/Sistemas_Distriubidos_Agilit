@@ -1,4 +1,4 @@
-package com.agilit.controller;
+package com.agilit.controller.emprestimo;
 
 import com.agilit.model.Emprestimo;
 import com.agilit.model.Credor;

@@ -1,4 +1,4 @@
-package com.agilit.controller;
+package com.agilit.controller.credor;
 
 import com.agilit.model.Credor;
 import jakarta.persistence.EntityManager;

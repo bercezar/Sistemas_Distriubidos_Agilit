@@ -1,6 +1,7 @@
 package com.agilit.model;
 
 import jakarta.persistence.*;
+
 import java.util.List;
 
 @Entity
@@ -12,6 +13,7 @@ public class Credor {
     private Long id;
 
     private String nome;
+    @Column(nullable = false, unique = true)
     private String email;
     private Double saldoDisponivel;
 
@@ -22,6 +24,8 @@ public class Credor {
     
     public Credor (){
         super();
+        this.saldoDisponivel = 0.0;
+
     }
 
     public Credor(Long id, String nome, String email, Double saldoDisponivel, List<Devedor> clientes) {
