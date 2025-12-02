@@ -1,12 +1,11 @@
 package com.agilit.controller.emprestimo;
 
 import com.agilit.model.Emprestimo;
+import com.agilit.config.JPAUtil;
 import com.agilit.model.Credor;
 import com.agilit.model.Devedor;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -18,16 +17,12 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class EmprestimoController {
 
-    private static final EntityManagerFactory emf = 
-            Persistence.createEntityManagerFactory("agilitPU");
-
-
     // =====================
     // LISTAR TODOS
     // =====================
     @GET
     public List<Emprestimo> getAll() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         List<Emprestimo> lista = em.createQuery("SELECT e FROM Emprestimo e", Emprestimo.class)
                                    .getResultList();
         em.close();
@@ -41,7 +36,7 @@ public class EmprestimoController {
     @GET
     @Path("/{id}")
     public Response getById(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         Emprestimo emprestimo = em.find(Emprestimo.class, id);
         em.close();
 
@@ -58,7 +53,7 @@ public class EmprestimoController {
     @POST
     public Response create(Emprestimo entrada) {
 
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
 
         // ---- Resolvendo Credor e Devedor ----
@@ -90,7 +85,7 @@ public class EmprestimoController {
     @Path("/{id}")
     public Response update(@PathParam("id") Long id, Emprestimo entrada) {
 
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         Emprestimo existente = em.find(Emprestimo.class, id);
 
         if (existente == null) {
@@ -132,7 +127,7 @@ public class EmprestimoController {
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         Emprestimo emprestimo = em.find(Emprestimo.class, id);
 
         if (emprestimo == null) {

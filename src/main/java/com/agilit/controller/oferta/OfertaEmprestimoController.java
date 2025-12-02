@@ -1,6 +1,7 @@
 package com.agilit.controller.oferta;
 
 import com.agilit.config.AppException;
+import com.agilit.config.JPAUtil;
 import com.agilit.model.Credor;
 import com.agilit.model.OfertaEmprestimo;
 import com.agilit.model.PropostaEmprestimo;
@@ -8,8 +9,6 @@ import com.agilit.util.CalculadoraEmprestimo;
 import com.agilit.util.GeradorIdPublico;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -27,16 +26,13 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class OfertaEmprestimoController {
 
-    private static final EntityManagerFactory emf = 
-            Persistence.createEntityManagerFactory("agilitPU");
-
     /**
      * Criar nova oferta de empréstimo
      * POST /api/oferta
      */
     @POST
     public Response criar(OfertaEmprestimo oferta) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -106,7 +102,7 @@ public class OfertaEmprestimoController {
     @GET
     @Path("/credor/{credorId}")
     public Response listarPorCredor(@PathParam("credorId") Long credorId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<OfertaEmprestimo> ofertas = em.createQuery(
@@ -130,7 +126,7 @@ public class OfertaEmprestimoController {
     @GET
     @Path("/credor/{credorId}/ativas")
     public Response listarAtivasPorCredor(@PathParam("credorId") Long credorId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<OfertaEmprestimo> ofertas = em.createQuery(
@@ -154,7 +150,7 @@ public class OfertaEmprestimoController {
     @GET
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             OfertaEmprestimo oferta = em.find(OfertaEmprestimo.class, id);
@@ -177,7 +173,7 @@ public class OfertaEmprestimoController {
     @DELETE
     @Path("/{id}")
     public Response deletar(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -230,7 +226,7 @@ public class OfertaEmprestimoController {
     @POST
     @Path("/{id}/criar-proposta")
     public Response criarProposta(@PathParam("id") Long ofertaId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -309,7 +305,7 @@ public class OfertaEmprestimoController {
     @GET
     @Path("/{id}/opcoes-parcelas")
     public Response calcularOpcoesParcelas(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             OfertaEmprestimo oferta = em.find(OfertaEmprestimo.class, id);

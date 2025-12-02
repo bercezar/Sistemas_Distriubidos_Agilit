@@ -2,11 +2,10 @@ package com.agilit.controller.devedor;
 
 import com.agilit.model.Devedor;
 import com.agilit.model.Credor;
+import com.agilit.config.JPAUtil;
 import com.agilit.config.PasswordUtil;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -25,15 +24,12 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class DevedorController {
 
-    private static final EntityManagerFactory emf =
-            Persistence.createEntityManagerFactory("agilitPU");
-
     // ================================
     // LISTAR TODOS
     // ================================
     @GET
     public List<Devedor> getAll() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         List<Devedor> lista =
                 em.createQuery("SELECT d FROM Devedor d", Devedor.class).getResultList();
         em.close();
@@ -46,7 +42,7 @@ public class DevedorController {
     @GET
     @Path("/{id}")
     public Response getById(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         Devedor devedor = em.find(Devedor.class, id);
         em.close();
 
@@ -63,7 +59,7 @@ public class DevedorController {
     @POST
     public Response create(Devedor devedorEntrada) {
 
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
 
         // 1 — HASH DA SENHA

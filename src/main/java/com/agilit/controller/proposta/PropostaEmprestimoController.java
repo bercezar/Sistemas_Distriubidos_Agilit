@@ -1,12 +1,11 @@
 package com.agilit.controller.proposta;
 
 import com.agilit.config.AppException;
+import com.agilit.config.JPAUtil;
 import com.agilit.model.PropostaEmprestimo;
 import com.agilit.util.CalculadoraEmprestimo;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -26,9 +25,6 @@ import java.util.Map;
 @Consumes(MediaType.APPLICATION_JSON)
 public class PropostaEmprestimoController {
 
-    private static final EntityManagerFactory emf = 
-            Persistence.createEntityManagerFactory("agilitPU");
-
     /**
      * Listar todas as propostas ativas (públicas para Devedores)
      * GET /api/proposta/publicas
@@ -36,7 +32,7 @@ public class PropostaEmprestimoController {
     @GET
     @Path("/publicas")
     public Response listarPropostasPublicas() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<PropostaEmprestimo> propostas = em.createQuery(
@@ -58,7 +54,7 @@ public class PropostaEmprestimoController {
     @GET
     @Path("/credor/{credorId}")
     public Response listarPorCredor(@PathParam("credorId") Long credorId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<PropostaEmprestimo> propostas = em.createQuery(
@@ -82,7 +78,7 @@ public class PropostaEmprestimoController {
     @GET
     @Path("/publico/{idPublico}")
     public Response buscarPorIdPublico(@PathParam("idPublico") String idPublico) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<PropostaEmprestimo> propostas = em.createQuery(
@@ -110,7 +106,7 @@ public class PropostaEmprestimoController {
     @GET
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             PropostaEmprestimo proposta = em.find(PropostaEmprestimo.class, id);
@@ -133,7 +129,7 @@ public class PropostaEmprestimoController {
     @PUT
     @Path("/{id}/cancelar")
     public Response cancelar(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -195,7 +191,7 @@ public class PropostaEmprestimoController {
     @GET
     @Path("/{id}/detalhes")
     public Response obterDetalhes(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             PropostaEmprestimo proposta = em.find(PropostaEmprestimo.class, id);
@@ -248,7 +244,7 @@ public class PropostaEmprestimoController {
     @GET
     @Path("/status/{status}")
     public Response listarPorStatus(@PathParam("status") String status) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             // Validar status
@@ -280,7 +276,7 @@ public class PropostaEmprestimoController {
             @QueryParam("valorMin") Double valorMin,
             @QueryParam("valorMax") Double valorMax) {
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             StringBuilder jpql = new StringBuilder(
@@ -323,7 +319,7 @@ public class PropostaEmprestimoController {
     @GET
     @Path("/{id}/estatisticas")
     public Response obterEstatisticas(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             PropostaEmprestimo proposta = em.find(PropostaEmprestimo.class, id);

@@ -3,11 +3,10 @@ package com.agilit.controller.credor;
 import java.net.URI;
 import java.util.List;
 
+import com.agilit.config.JPAUtil;
 import com.agilit.model.Credor;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -28,11 +27,10 @@ import jakarta.ws.rs.core.UriInfo;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CredorCriarContaController {
     
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("agilitPU");
 
     @POST
     public Response criarConta(@Context UriInfo uriInfo, Credor novoCredor){
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
 
         try{
             em.getTransaction().begin();

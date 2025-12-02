@@ -1,11 +1,10 @@
 package com.agilit.controller.notificacao;
 
 import com.agilit.config.AppException;
+import com.agilit.config.JPAUtil;
 import com.agilit.model.Notificacao;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -22,9 +21,6 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class NotificacaoController {
 
-    private static final EntityManagerFactory emf = 
-            Persistence.createEntityManagerFactory("agilitPU");
-
     /**
      * Listar todas as notificações de um usuário
      * GET /api/notificacao/{tipoDestinatario}/{destinatarioId}
@@ -38,7 +34,7 @@ public class NotificacaoController {
             @PathParam("tipoDestinatario") String tipoDestinatario,
             @PathParam("destinatarioId") Long destinatarioId) {
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             // Validar tipo
@@ -71,7 +67,7 @@ public class NotificacaoController {
             @PathParam("tipoDestinatario") String tipoDestinatario,
             @PathParam("destinatarioId") Long destinatarioId) {
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             // Validar tipo
@@ -104,7 +100,7 @@ public class NotificacaoController {
             @PathParam("tipoDestinatario") String tipoDestinatario,
             @PathParam("destinatarioId") Long destinatarioId) {
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             // Validar tipo
@@ -134,7 +130,7 @@ public class NotificacaoController {
     @GET
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             Notificacao notificacao = em.find(Notificacao.class, id);
@@ -157,7 +153,7 @@ public class NotificacaoController {
     @PUT
     @Path("/{id}/marcar-lida")
     public Response marcarComoLida(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -202,7 +198,7 @@ public class NotificacaoController {
             @PathParam("tipoDestinatario") String tipoDestinatario,
             @PathParam("destinatarioId") Long destinatarioId) {
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -247,7 +243,7 @@ public class NotificacaoController {
     @DELETE
     @Path("/{id}")
     public Response deletar(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -288,7 +284,7 @@ public class NotificacaoController {
             @PathParam("tipoDestinatario") String tipoDestinatario,
             @PathParam("destinatarioId") Long destinatarioId) {
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -335,7 +331,7 @@ public class NotificacaoController {
             @PathParam("destinatarioId") Long destinatarioId,
             @PathParam("tipo") String tipo) {
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             // Validar tipo destinatário
@@ -370,7 +366,7 @@ public class NotificacaoController {
             @PathParam("tipoDestinatario") String tipoDestinatario,
             @PathParam("destinatarioId") Long destinatarioId) {
         
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             // Validar tipo

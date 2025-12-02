@@ -3,8 +3,6 @@ package com.agilit.controller.credor;
 import com.agilit.config.JPAUtil;
 import com.agilit.model.Credor;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -24,7 +22,7 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class CredorController {
 
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("agilitPU");
+
 
     /**
      * Lista todos os credores
@@ -33,7 +31,7 @@ public class CredorController {
      */
     @GET
     public List<Credor> getAllCredores() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
             return em.createQuery("SELECT c FROM Credor c", Credor.class)
                     .getResultList();
@@ -51,7 +49,7 @@ public class CredorController {
     @GET
     @Path("/{id}")
     public Response getCredorById(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
             Credor credor = em.find(Credor.class, id);
             
@@ -109,7 +107,7 @@ public class CredorController {
     @PUT
     @Path("/{id}")
     public Response updateCredor(@PathParam("id") Long id, Credor credorAtualizado) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             
@@ -156,7 +154,7 @@ public class CredorController {
     @DELETE
     @Path("/{id}")
     public Response deleteCredor(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             

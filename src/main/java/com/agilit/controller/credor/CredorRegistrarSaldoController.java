@@ -1,9 +1,8 @@
 package com.agilit.controller.credor;
 
+import com.agilit.config.JPAUtil;
 import com.agilit.model.Credor;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -12,9 +11,6 @@ import jakarta.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class CredorRegistrarSaldoController {
-
-    private static final EntityManagerFactory emf =
-            Persistence.createEntityManagerFactory("agilitPU");
 
 
     // DTO para aquisição do valor somente e não do objeto inteiro
@@ -33,7 +29,7 @@ public class CredorRegistrarSaldoController {
                     .build();
         }
 
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
 
         Credor credor = em.find(Credor.class, id);

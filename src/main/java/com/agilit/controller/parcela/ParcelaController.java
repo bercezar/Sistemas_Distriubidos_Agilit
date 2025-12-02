@@ -1,6 +1,7 @@
 package com.agilit.controller.parcela;
 
 import com.agilit.config.AppException;
+import com.agilit.config.JPAUtil;
 // import com.agilit.model.Credor;
 import com.agilit.model.Emprestimo;
 import com.agilit.model.Parcela;
@@ -8,8 +9,6 @@ import com.agilit.util.NotificacaoService;
 import com.agilit.util.VerificadorStatusEmprestimo;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -28,9 +27,6 @@ import java.util.Map;
 @Consumes(MediaType.APPLICATION_JSON)
 public class ParcelaController {
 
-    private static final EntityManagerFactory emf = 
-            Persistence.createEntityManagerFactory("agilitPU");
-
     /**
      * Listar parcelas de um empréstimo
      * GET /api/parcela/emprestimo/{emprestimoId}
@@ -38,7 +34,7 @@ public class ParcelaController {
     @GET
     @Path("/emprestimo/{emprestimoId}")
     public Response listarPorEmprestimo(@PathParam("emprestimoId") Long emprestimoId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             Emprestimo emprestimo = em.find(Emprestimo.class, emprestimoId);
@@ -73,7 +69,7 @@ public class ParcelaController {
     @GET
     @Path("/{id}")
     public Response buscarPorId(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             Parcela parcela = em.find(Parcela.class, id);
@@ -98,7 +94,7 @@ public class ParcelaController {
     @PUT
     @Path("/{id}/pagar")
     public Response marcarComoPaga(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -159,7 +155,7 @@ public class ParcelaController {
     @GET
     @Path("/emprestimo/{emprestimoId}/pendentes")
     public Response listarPendentes(@PathParam("emprestimoId") Long emprestimoId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<Parcela> parcelas = em.createQuery(
@@ -188,7 +184,7 @@ public class ParcelaController {
     @GET
     @Path("/emprestimo/{emprestimoId}/pagas")
     public Response listarPagas(@PathParam("emprestimoId") Long emprestimoId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<Parcela> parcelas = em.createQuery(
@@ -212,7 +208,7 @@ public class ParcelaController {
     @GET
     @Path("/emprestimo/{emprestimoId}/atrasadas")
     public Response listarAtrasadas(@PathParam("emprestimoId") Long emprestimoId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             LocalDate hoje = LocalDate.now();
@@ -244,7 +240,7 @@ public class ParcelaController {
     @GET
     @Path("/emprestimo/{emprestimoId}/resumo")
     public Response obterResumo(@PathParam("emprestimoId") Long emprestimoId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             Emprestimo emprestimo = em.find(Emprestimo.class, emprestimoId);
@@ -311,10 +307,10 @@ public class ParcelaController {
     @GET
     @Path("/vencidas")
     public Response listarTodasVencidas() {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
-            List<Parcela> parcelas = VerificadorStatusEmprestimo.buscarParcelasVencidas(emf);
+            List<Parcela> parcelas = VerificadorStatusEmprestimo.buscarParcelasVencidas();
             return Response.ok(parcelas).build();
 
         } finally {
@@ -329,7 +325,7 @@ public class ParcelaController {
     @GET
     @Path("/emprestimo/{emprestimoId}/proximas-vencimento")
     public Response listarProximasVencimento(@PathParam("emprestimoId") Long emprestimoId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             LocalDate hoje = LocalDate.now();

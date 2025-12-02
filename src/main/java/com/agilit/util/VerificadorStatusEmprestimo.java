@@ -1,9 +1,9 @@
 package com.agilit.util;
 
+import com.agilit.config.JPAUtil;
 import com.agilit.model.Emprestimo;
 import com.agilit.model.Parcela;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -69,11 +69,9 @@ public class VerificadorStatusEmprestimo {
     /**
      * Verifica todos os empréstimos ativos e atualiza status
      * Deve ser executado periodicamente (job diário)
-     * 
-     * @param emf EntityManagerFactory para acesso ao banco
      */
-    public static void verificarTodosEmprestimos(EntityManagerFactory emf) {
-        EntityManager em = emf.createEntityManager();
+    public static void verificarTodosEmprestimos() {
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -104,11 +102,10 @@ public class VerificadorStatusEmprestimo {
     /**
      * Verifica parcelas vencidas e não pagas
      * 
-     * @param emf EntityManagerFactory
      * @return Lista de parcelas vencidas
      */
-    public static List<Parcela> buscarParcelasVencidas(EntityManagerFactory emf) {
-        EntityManager em = emf.createEntityManager();
+    public static List<Parcela> buscarParcelasVencidas() {
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             LocalDate hoje = LocalDate.now();

@@ -1,13 +1,12 @@
 package com.agilit.controller.interesse;
 
 import com.agilit.config.AppException;
+import com.agilit.config.JPAUtil;
 import com.agilit.model.*;
 import com.agilit.util.CalculadoraEmprestimo;
 import com.agilit.util.NotificacaoService;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -26,16 +25,13 @@ import java.util.List;
 @Consumes(MediaType.APPLICATION_JSON)
 public class InteressePropostaController {
 
-    private static final EntityManagerFactory emf = 
-            Persistence.createEntityManagerFactory("agilitPU");
-
     /**
      * Devedor demonstra interesse em uma proposta
      * POST /api/interesse
      */
     @POST
     public Response demonstrarInteresse(InteresseProposta interesse) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -127,7 +123,7 @@ public class InteressePropostaController {
     @GET
     @Path("/proposta/{propostaId}")
     public Response listarInteressados(@PathParam("propostaId") Long propostaId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<InteresseProposta> interesses = em.createQuery(
@@ -151,7 +147,7 @@ public class InteressePropostaController {
     @GET
     @Path("/devedor/{devedorId}")
     public Response listarMeusInteresses(@PathParam("devedorId") Long devedorId) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             List<InteresseProposta> interesses = em.createQuery(
@@ -175,7 +171,7 @@ public class InteressePropostaController {
     @PUT
     @Path("/{id}/aprovar")
     public Response aprovar(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -222,7 +218,7 @@ public class InteressePropostaController {
     @PUT
     @Path("/{id}/rejeitar")
     public Response rejeitar(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -269,7 +265,7 @@ public class InteressePropostaController {
     @POST
     @Path("/{id}/confirmar-credor")
     public Response confirmarCredor(@PathParam("id") Long id, ConfirmacaoDTO dto) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -352,7 +348,7 @@ public class InteressePropostaController {
     @POST
     @Path("/{id}/confirmar-devedor")
     public Response confirmarDevedor(@PathParam("id") Long id, ConfirmacaoDTO dto) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
@@ -430,7 +426,7 @@ public class InteressePropostaController {
     @DELETE
     @Path("/{id}")
     public Response cancelar(@PathParam("id") Long id) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         
         try {
             em.getTransaction().begin();
