@@ -17,6 +17,12 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 
+/**
+ * Controller para criar conta de Credor.
+ *
+ * AÇÕES:
+ * - CREDOR: Criar nova conta com validação de email único
+ */
 @Path("/credor/criar-conta")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -47,10 +53,8 @@ public class CredorCriarContaController {
                         .entity("{\"erro\":\"Credor com este email já cadastrado\"}")
                         .build();
             }
-             // inicializações defensivas
-            if (novoCredor.getClientes() == null) {
-                novoCredor.setClientes(new java.util.ArrayList<>());
-            }
+            
+            // Inicialização de saldo
             if (novoCredor.getSaldoDisponivel() == null) {
                 novoCredor.setSaldoDisponivel(0.0);
             }

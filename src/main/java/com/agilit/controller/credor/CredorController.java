@@ -1,6 +1,6 @@
 package com.agilit.controller.credor;
 
-import com.agilit.dto.CredorDTO;
+import com.agilit.config.JPAUtil;
 import com.agilit.model.Credor;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,14 +9,15 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Controller para gerenciar Credores.
  *
- * IMPORTANTE: Retorna DTOs ao invés de entidades JPA para evitar LazyInitializationException.
- * A sessão Hibernate é fechada antes de retornar, então não podemos retornar entidades
- * com relacionamentos LAZY diretamente.
+ * AÇÕES:
+ * - CREDOR: Criar conta, atualizar dados, visualizar perfil, deletar conta
+ *
+ * NOTA: Relacionamentos LAZY protegidos com @JsonIgnore nas entidades.
+ * Retorna entidades diretamente sem necessidade de DTOs.
  */
 @Path("/credor")
 @Produces(MediaType.APPLICATION_JSON)
@@ -28,19 +29,14 @@ public class CredorController {
     /**
      * Lista todos os credores
      *
-     * @return Lista de CredorDTO (sem relacionamentos LAZY)
+     * @return Lista de Credor
      */
     @GET
-    public List<CredorDTO> getAllCredores() {
+    public List<Credor> getAllCredores() {
         EntityManager em = emf.createEntityManager();
         try {
-            List<Credor> credores = em.createQuery("SELECT c FROM Credor c", Credor.class)
-                                      .getResultList();
-            
-            // Converte List<Credor> para List<CredorDTO>
-            return credores.stream()
-                          .map(CredorDTO::fromEntity)
-                          .collect(Collectors.toList());
+            return em.createQuery("SELECT c FROM Credor c", Credor.class)
+                    .getResultList();
         } finally {
             em.close();
         }
@@ -50,7 +46,7 @@ public class CredorController {
      * Busca credor por ID
      *
      * @param id ID do credor
-     * @return CredorDTO
+     * @return Credor
      */
     @GET
     @Path("/{id}")
@@ -65,9 +61,7 @@ public class CredorController {
                               .build();
             }
             
-            // Converte para DTO antes de retornar
-            CredorDTO dto = CredorDTO.fromEntity(credor);
-            return Response.ok(dto).build();
+            return Response.ok(credor).build();
             
         } finally {
             em.close();
@@ -77,28 +71,29 @@ public class CredorController {
     /**
      * Cria novo credor
      *
-     * @param credor Dados do credor (recebe entidade, retorna DTO)
-     * @return CredorDTO do credor criado
+     * @param credor Dados do credor
+     * @return Credor criado
      */
     @POST
     public Response createCredor(Credor credor) {
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = JPAUtil.getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(credor);
             em.getTransaction().commit();
-            
-            // Converte para DTO antes de retornar
-            CredorDTO dto = CredorDTO.fromEntity(credor);
-            return Response.status(Response.Status.CREATED).entity(dto).build();
-            
+
+            return Response.status(Response.Status.CREATED).entity(credor).build();
+
         } catch (Exception e) {
+
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
             }
+
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
-                          .entity("{\"erro\":\"" + e.getMessage() + "\"}")
-                          .build();
+                        .entity("{\"erro\":\"" + e.getMessage() + "\"}")
+                        .build();
+
         } finally {
             em.close();
         }
@@ -109,7 +104,7 @@ public class CredorController {
      *
      * @param id ID do credor
      * @param credorAtualizado Dados atualizados
-     * @return CredorDTO atualizado
+     * @return Credor atualizado
      */
     @PUT
     @Path("/{id}")
@@ -138,9 +133,7 @@ public class CredorController {
             em.merge(credor);
             em.getTransaction().commit();
             
-            // Converte para DTO antes de retornar
-            CredorDTO dto = CredorDTO.fromEntity(credor);
-            return Response.ok(dto).build();
+            return Response.ok(credor).build();
             
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {

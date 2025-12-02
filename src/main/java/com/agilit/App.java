@@ -1,6 +1,7 @@
 package com.agilit;
 
 import org.glassfish.jersey.server.ResourceConfig;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
 /**
  * Configuração principal da aplicação JAX-RS usando Jersey.
@@ -21,8 +22,10 @@ public class App extends ResourceConfig {
         // Escaneia pacotes para encontrar controllers (@Path) e providers
         packages(
             "com.agilit.controller",           // Controllers REST
-            "com.agilit.config",                // Exception mappers e outros providers
-            "org.glassfish.jersey.jackson"     // Suporte JSON via Jackson
+            "com.agilit.config"                 // Exception mappers e outros providers
         );
+        
+        // Registra Jackson para suporte JSON
+        register(JacksonFeature.class);
     }
 }

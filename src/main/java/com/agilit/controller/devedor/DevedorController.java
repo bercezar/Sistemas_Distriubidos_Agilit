@@ -13,6 +13,13 @@ import jakarta.ws.rs.core.Response;
 
 import java.util.List;
 
+/**
+ * Controller para gerenciar Devedores.
+ *
+ * AÇÕES:
+ * - DEVEDOR: Criar conta, atualizar dados, visualizar perfil
+ * - CREDOR: Visualizar devedores associados
+ */
 @Path("/devedor")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -85,9 +92,6 @@ public class DevedorController {
         em.persist(devedorEntrada);
         em.getTransaction().commit();
         em.close();
-
-        // NÃO retornar senha
-        devedorEntrada.setSenhaHash(null);
 
         return Response.status(Response.Status.CREATED).entity(devedorEntrada).build();
     }
