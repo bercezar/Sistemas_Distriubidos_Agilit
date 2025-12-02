@@ -330,4 +330,4 @@ public class OfertaEmprestimoController {
     }
 }
 
-// Made with Bob
+ 

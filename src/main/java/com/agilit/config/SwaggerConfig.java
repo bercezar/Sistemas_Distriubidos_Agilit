@@ -55,4 +55,4 @@ public class SwaggerConfig {
     // Não precisa de métodos ou lógica adicional
 }
 
-// Made with Bob
+ 
