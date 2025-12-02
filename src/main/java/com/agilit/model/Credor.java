@@ -1,22 +1,26 @@
 package com.agilit.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "credor")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Credor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    @Column
     private String nome;
     
     @Column(nullable = false, unique = true)
     private String cpf;
-    
+
+    @Column(nullable = false)
     private String telefone;
     
     @Column(nullable = false, unique = true)
@@ -25,16 +29,16 @@ public class Credor {
     @Column(name = "senha_hash")
     private String senhaHash;
     
+    @Column
     private Double saldoDisponivel;
 
-    @OneToMany(mappedBy = "credor", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "credor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Devedor> clientes;
 
     // Construtor padrão
     public Credor() {
-        super();
-        this.saldoDisponivel = 0.0;
+
     }
 
     // Construtor completo
