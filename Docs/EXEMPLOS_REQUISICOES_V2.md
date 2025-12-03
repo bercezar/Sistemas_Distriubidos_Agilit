@@ -5,7 +5,7 @@
 ## 📌 Base URL
 
 ```
-http://localhost:8080/Sistemas_Distriubidos_Agilit/api
+http://localhost:8086/api
 ```
 
 ---
@@ -49,7 +49,7 @@ Login unificado para Credor ou Devedor.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/auth/login \
+curl -X POST http://localhost:8086/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "joao@email.com",
@@ -86,7 +86,7 @@ Verifica se um email está disponível para cadastro.
 
 **Request:**
 ```bash
-curl -X GET "http://localhost:8080/Sistemas_Distriubidos_Agilit/api/auth/verificar-email?email=joao@email.com&tipo=CREDOR"
+curl -X GET "http://localhost:8086/api/auth/verificar-email?email=joao@email.com&tipo=CREDOR"
 ```
 
 **Response 200:**
@@ -108,7 +108,7 @@ Verifica se um CPF está disponível para cadastro.
 
 **Request:**
 ```bash
-curl -X GET "http://localhost:8080/Sistemas_Distriubidos_Agilit/api/auth/verificar-cpf?cpf=12345678900&tipo=CREDOR"
+curl -X GET "http://localhost:8086/api/auth/verificar-cpf?cpf=12345678900&tipo=CREDOR"
 ```
 
 **Response 200:**
@@ -132,7 +132,7 @@ Cria uma nova conta de credor com validações completas.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/criar-conta \
+curl -X POST http://localhost:8086/api/credor/criar-conta \
   -H "Content-Type: application/json" \
   -d '{
     "nome": "João Silva",
@@ -187,7 +187,7 @@ Autentica um credor no sistema.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/login \
+curl -X POST http://localhost:8086/api/credor/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "joao@email.com",
@@ -219,7 +219,7 @@ Cria uma oferta privada de empréstimo.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/criar-oferta \
+curl -X POST http://localhost:8086/api/credor/criar-oferta \
   -H "Content-Type: application/json" \
   -d '{
     "credor": { "id": 1 },
@@ -264,7 +264,7 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/criar
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/criar-oferta/minhas/1
+curl -X GET http://localhost:8086/api/credor/criar-oferta/minhas/1
 ```
 
 **Response 200:**
@@ -299,7 +299,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/criar-
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/criar-oferta/minhas/1/ativas
+curl -X GET http://localhost:8086/api/credor/criar-oferta/minhas/1/ativas
 ```
 
 ---
@@ -312,7 +312,7 @@ Transforma uma oferta privada em proposta pública.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/gerar-proposta \
+curl -X POST http://localhost:8086/api/credor/gerar-proposta \
   -H "Content-Type: application/json" \
   -d '{
     "ofertaId": 1,
@@ -353,7 +353,7 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/gerar
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/gerar-proposta/minhas/1
+curl -X GET http://localhost:8086/api/credor/gerar-proposta/minhas/1
 ```
 
 **Response 200:**
@@ -378,7 +378,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/gerar-
 
 **Request:**
 ```bash
-curl -X PUT http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/gerar-proposta/1/cancelar
+curl -X PUT http://localhost:8086/api/credor/gerar-proposta/1/cancelar
 ```
 
 **Response 200:**
@@ -407,7 +407,7 @@ Confirma a criação do empréstimo pelo credor.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/registrar-emprestimo/1/confirmar \
+curl -X POST http://localhost:8086/api/credor/registrar-emprestimo/1/confirmar \
   -H "Content-Type: application/json" \
   -d '{
     "numeroParcelas": 12
@@ -461,7 +461,7 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/regis
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/registrar-emprestimo/pendentes/1
+curl -X GET http://localhost:8086/api/credor/registrar-emprestimo/pendentes/1
 ```
 
 **Response 200:**
@@ -490,7 +490,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/regist
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/registrar-emprestimo/meus/1
+curl -X GET http://localhost:8086/api/credor/registrar-emprestimo/meus/1
 ```
 
 **Response 200:**
@@ -523,7 +523,7 @@ Cria uma nova conta de devedor.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/criar-conta \
+curl -X POST http://localhost:8086/api/devedor/criar-conta \
   -H "Content-Type: application/json" \
   -d '{
     "nome": "Maria Santos",
@@ -563,7 +563,7 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/cria
 
 **Request:**
 ```bash
-curl -X PUT http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/criar-conta/1/completar-dados \
+curl -X PUT http://localhost:8086/api/devedor/criar-conta/1/completar-dados \
   -H "Content-Type: application/json" \
   -d '{
     "endereco": "Rua das Flores, 123",
@@ -596,7 +596,7 @@ Autentica um devedor no sistema.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/login \
+curl -X POST http://localhost:8086/api/devedor/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "maria@email.com",
@@ -645,12 +645,12 @@ Lista propostas públicas com filtros opcionais.
 
 **Request (sem filtros):**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas
+curl -X GET http://localhost:8086/api/devedor/buscar-propostas
 ```
 
 **Request (com filtros):**
 ```bash
-curl -X GET "http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas?valorMin=1000&valorMax=5000&taxaJurosMax=3.0"
+curl -X GET "http://localhost:8086/api/devedor/buscar-propostas?valorMin=1000&valorMax=5000&taxaJurosMax=3.0"
 ```
 
 **Response 200:**
@@ -691,7 +691,7 @@ curl -X GET "http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/busc
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas/PROP-ABC123
+curl -X GET http://localhost:8086/api/devedor/buscar-propostas/PROP-ABC123
 ```
 
 **Response 200:**
@@ -716,7 +716,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/busca
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas/PROP-ABC123/detalhes
+curl -X GET http://localhost:8086/api/devedor/buscar-propostas/PROP-ABC123/detalhes
 ```
 
 **Response 200:**
@@ -767,7 +767,7 @@ Faixas disponíveis: `ate-1000`, `1000-5000`, `5000-10000`, `acima-10000`
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas/faixa/1000-5000
+curl -X GET http://localhost:8086/api/devedor/buscar-propostas/faixa/1000-5000
 ```
 
 ---
@@ -778,7 +778,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/busca
 
 **Request:**
 ```bash
-curl -X GET "http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas/menor-taxa?limite=5"
+curl -X GET "http://localhost:8086/api/devedor/buscar-propostas/menor-taxa?limite=5"
 ```
 
 ---
@@ -789,7 +789,7 @@ curl -X GET "http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/busc
 
 **Request:**
 ```bash
-curl -X GET "http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas/recentes?limite=10"
+curl -X GET "http://localhost:8086/api/devedor/buscar-propostas/recentes?limite=10"
 ```
 
 ---
@@ -802,7 +802,7 @@ Demonstra interesse em uma proposta específica.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selecionar-proposta \
+curl -X POST http://localhost:8086/api/devedor/selecionar-proposta \
   -H "Content-Type: application/json" \
   -d '{
     "propostaId": 1,
@@ -855,7 +855,7 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/sele
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selecionar-proposta/meus/1
+curl -X GET http://localhost:8086/api/devedor/selecionar-proposta/meus/1
 ```
 
 **Response 200:**
@@ -892,7 +892,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selec
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selecionar-proposta/meus/1/pendentes
+curl -X GET http://localhost:8086/api/devedor/selecionar-proposta/meus/1/pendentes
 ```
 
 ---
@@ -903,7 +903,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selec
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selecionar-proposta/meus/1/aprovados
+curl -X GET http://localhost:8086/api/devedor/selecionar-proposta/meus/1/aprovados
 ```
 
 ---
@@ -914,7 +914,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selec
 
 **Request:**
 ```bash
-curl -X DELETE http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selecionar-proposta/1
+curl -X DELETE http://localhost:8086/api/devedor/selecionar-proposta/1
 ```
 
 **Response 200:**
@@ -939,7 +939,7 @@ curl -X DELETE http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/se
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selecionar-proposta/interesse/1
+curl -X GET http://localhost:8086/api/devedor/selecionar-proposta/interesse/1
 ```
 
 **Response 200:**
@@ -970,7 +970,7 @@ Confirma o pedido de empréstimo pelo devedor.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir-emprestimo/1/confirmar \
+curl -X POST http://localhost:8086/api/devedor/pedir-emprestimo/1/confirmar \
   -H "Content-Type: application/json" \
   -d '{
     "numeroParcelas": 12
@@ -1033,7 +1033,7 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedi
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir-emprestimo/1/simular \
+curl -X POST http://localhost:8086/api/devedor/pedir-emprestimo/1/simular \
   -H "Content-Type: application/json" \
   -d '{
     "numeroParcelas": 12
@@ -1062,7 +1062,7 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedi
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir-emprestimo/pendentes/1
+curl -X GET http://localhost:8086/api/devedor/pedir-emprestimo/pendentes/1
 ```
 
 ---
@@ -1073,7 +1073,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir-emprestimo/meus/1
+curl -X GET http://localhost:8086/api/devedor/pedir-emprestimo/meus/1
 ```
 
 **Response 200:**
@@ -1102,7 +1102,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir-emprestimo/emprestimo/1
+curl -X GET http://localhost:8086/api/devedor/pedir-emprestimo/emprestimo/1
 ```
 
 **Response 200:**
@@ -1131,7 +1131,7 @@ Registra a aceitação dos termos de uso.
 
 **Request:**
 ```bash
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/aceitar-termos/1 \
+curl -X POST http://localhost:8086/api/devedor/aceitar-termos/1 \
   -H "Content-Type: application/json" \
   -d '{
     "aceitouTermos": true,
@@ -1160,7 +1160,7 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/acei
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/aceitar-termos/termos-atuais
+curl -X GET http://localhost:8086/api/devedor/aceitar-termos/termos-atuais
 ```
 
 **Response 200:**
@@ -1182,7 +1182,7 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/aceit
 
 **Request:**
 ```bash
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/aceitar-termos/1/status
+curl -X GET http://localhost:8086/api/devedor/aceitar-termos/1/status
 ```
 
 **Response 200:**
@@ -1204,32 +1204,32 @@ curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/aceit
 
 ```bash
 # 1. Criar Conta
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/criar-conta \
+curl -X POST http://localhost:8086/api/credor/criar-conta \
   -H "Content-Type: application/json" \
   -d '{"nome":"João Silva","cpf":"12345678900","email":"joao@email.com","senhaHash":"senha123","saldoDisponivel":10000.00}'
 
 # 2. Fazer Login
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/login \
+curl -X POST http://localhost:8086/api/credor/login \
   -H "Content-Type: application/json" \
   -d '{"email":"joao@email.com","senha":"senha123"}'
 
 # 3. Criar Oferta
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/criar-oferta \
+curl -X POST http://localhost:8086/api/credor/criar-oferta \
   -H "Content-Type: application/json" \
   -d '{"credor":{"id":1},"valorDisponivel":5000.00,"parcelasMinimas":6,"parcelasMaximas":24,"taxaJuros":2.5,"diasAtePrimeiraCobranca":30}'
 
 # 4. Gerar Proposta
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/gerar-proposta \
+curl -X POST http://localhost:8086/api/credor/gerar-proposta \
   -H "Content-Type: application/json" \
   -d '{"ofertaId":1}'
 
 # 5. Aguardar interesse de devedor (sistema notifica automaticamente)
 
 # 6. Aprovar interesse
-curl -X PUT http://localhost:8080/Sistemas_Distriubidos_Agilit/api/interesse/1/aprovar
+curl -X PUT http://localhost:8086/api/interesse/1/aprovar
 
 # 7. Confirmar empréstimo
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/registrar-emprestimo/1/confirmar \
+curl -X POST http://localhost:8086/api/credor/registrar-emprestimo/1/confirmar \
   -H "Content-Type: application/json" \
   -d '{"numeroParcelas":12}'
 
@@ -1242,38 +1242,38 @@ curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/credor/regis
 
 ```bash
 # 1. Criar Conta
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/criar-conta \
+curl -X POST http://localhost:8086/api/devedor/criar-conta \
   -H "Content-Type: application/json" \
   -d '{"nome":"Maria Santos","cpf":"98765432100","email":"maria@email.com","senhaHash":"senha123","endereco":"Rua das Flores, 123","cidade":"São Paulo","estado":"SP","cep":"01234-567"}'
 
 # 2. Fazer Login
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/login \
+curl -X POST http://localhost:8086/api/devedor/login \
   -H "Content-Type: application/json" \
   -d '{"email":"maria@email.com","senha":"senha123"}'
 
 # 3. Aceitar Termos
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/aceitar-termos/1 \
+curl -X POST http://localhost:8086/api/devedor/aceitar-termos/1 \
   -H "Content-Type: application/json" \
   -d '{"aceitouTermos":true,"versaoTermos":"1.0"}'
 
 # 4. Buscar Propostas
-curl -X GET "http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas?valorMin=1000&valorMax=5000"
+curl -X GET "http://localhost:8086/api/devedor/buscar-propostas?valorMin=1000&valorMax=5000"
 
 # 5. Ver Detalhes e Simular
-curl -X GET http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/buscar-propostas/PROP-ABC123/detalhes
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir-emprestimo/1/simular \
+curl -X GET http://localhost:8086/api/devedor/buscar-propostas/PROP-ABC123/detalhes
+curl -X POST http://localhost:8086/api/devedor/pedir-emprestimo/1/simular \
   -H "Content-Type: application/json" \
   -d '{"numeroParcelas":12}'
 
 # 6. Selecionar Proposta
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/selecionar-proposta \
+curl -X POST http://localhost:8086/api/devedor/selecionar-proposta \
   -H "Content-Type: application/json" \
   -d '{"propostaId":1,"devedorId":1}'
 
 # 7. Aguardar aprovação do credor (sistema notifica automaticamente)
 
 # 8. Confirmar Pedido
-curl -X POST http://localhost:8080/Sistemas_Distriubidos_Agilit/api/devedor/pedir-emprestimo/1/confirmar \
+curl -X POST http://localhost:8086/api/devedor/pedir-emprestimo/1/confirmar \
   -H "Content-Type: application/json" \
   -d '{"numeroParcelas":12}'
 
