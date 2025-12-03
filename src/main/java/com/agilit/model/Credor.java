@@ -1,5 +1,6 @@
 package com.agilit.model;
 
+import com.agilit.config.PasswordUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -8,7 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "credor")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Credor {
+public class Credor implements Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +36,18 @@ public class Credor {
     @OneToMany(mappedBy = "credor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Devedor> clientes;
+
+    @OneToMany(mappedBy = "credor", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<OfertaEmprestimo> ofertas;
+
+    @OneToMany(mappedBy = "credor", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<PropostaEmprestimo> propostasCriadas;
+
+    @OneToMany(mappedBy = "credor", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Emprestimo> emprestimosRealizados;
 
     // Construtor padrão
     public Credor() {
@@ -119,5 +132,41 @@ public class Credor {
 
     public void setClientes(List<Devedor> clientes) {
         this.clientes = clientes;
+    }
+
+    public List<OfertaEmprestimo> getOfertas() {
+        return ofertas;
+    }
+
+    public void setOfertas(List<OfertaEmprestimo> ofertas) {
+        this.ofertas = ofertas;
+    }
+
+    public List<PropostaEmprestimo> getPropostasCriadas() {
+        return propostasCriadas;
+    }
+
+    public void setPropostasCriadas(List<PropostaEmprestimo> propostasCriadas) {
+        this.propostasCriadas = propostasCriadas;
+    }
+
+    public List<Emprestimo> getEmprestimosRealizados() {
+        return emprestimosRealizados;
+    }
+
+    public void setEmprestimosRealizados(List<Emprestimo> emprestimosRealizados) {
+        this.emprestimosRealizados = emprestimosRealizados;
+    }
+
+    // Implementação dos métodos da interface Usuario
+    
+    @Override
+    public void setSenha(String senhaPura) {
+        this.senhaHash = PasswordUtil.hash(senhaPura);
+    }
+    
+    @Override
+    public boolean autenticar(String senhaPura) {
+        return PasswordUtil.check(senhaPura, this.senhaHash);
     }
 }

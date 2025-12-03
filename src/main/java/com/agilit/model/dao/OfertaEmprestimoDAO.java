@@ -1,4 +1,4 @@
-package com.agilit.dao;
+package com.agilit.model.dao;
 
 import com.agilit.model.OfertaEmprestimo;
 import jakarta.persistence.EntityManager;

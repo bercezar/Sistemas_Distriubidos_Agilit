@@ -1,5 +1,6 @@
 package com.agilit.model;
 
+import com.agilit.controller.emprestimo.StatusEmprestimo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -60,7 +61,7 @@ public class Emprestimo {
     private LocalDate dataVencimento;
 
     @Column(nullable = false)
-    private String status; // EM_ANDAMENTO, PAGO, ATRASADO
+    private StatusEmprestimo status; // EM_ANDAMENTO, PAGO, ATRASADO
 
     @OneToMany(mappedBy = "emprestimo", fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonIgnore
@@ -68,10 +69,7 @@ public class Emprestimo {
 
     // Construtor padrão
     public Emprestimo() {
-        super();
-        this.status = "EM_ANDAMENTO";
-        this.parcelasPagas = 0;
-        this.dataInicio = LocalDate.now();
+
     }
 
     // Construtor completo
@@ -90,10 +88,10 @@ public class Emprestimo {
         this.jurosAplicados = jurosAplicados;
         this.valorTotal = valorTotal;
         this.numeroParcelas = numeroParcelas;
-        this.parcelasPagas = parcelasPagas;
-        this.dataInicio = dataInicio;
+        this.parcelasPagas = 0;
+        this.dataInicio = LocalDate.now();
         this.dataVencimento = dataVencimento;
-        this.status = status;
+        this.status = StatusEmprestimo.EM_ANDAMENTO;
         this.parcelas = parcelas;
     }
 
@@ -122,11 +120,11 @@ public class Emprestimo {
      */
     public void atualizarStatus() {
         if (todasParcelasPagas()) {
-            this.status = "PAGO";
+            this.status = StatusEmprestimo.PAGO;
         } else if (temParcelaAtrasada()) {
-            this.status = "ATRASADO";
+            this.status = StatusEmprestimo.ATRASADO;
         } else {
-            this.status = "EM_ANDAMENTO";
+            this.status = StatusEmprestimo.EM_ANDAMENTO;
         }
     }
 
@@ -228,11 +226,11 @@ public class Emprestimo {
         this.dataVencimento = dataVencimento;
     }
 
-    public String getStatus() {
+    public StatusEmprestimo getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEmprestimo status) {
         this.status = status;
     }
 

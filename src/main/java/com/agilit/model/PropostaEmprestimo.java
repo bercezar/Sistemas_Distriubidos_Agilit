@@ -65,9 +65,7 @@ public class PropostaEmprestimo {
 
     // Construtor padrão
     public PropostaEmprestimo() {
-        super();
-        this.dataCriacao = LocalDateTime.now();
-        this.status = "ATIVA";
+
     }
 
     // Construtor completo
@@ -88,8 +86,8 @@ public class PropostaEmprestimo {
         this.parcelasMaximas = parcelasMaximas;
         this.diasAtePrimeiraCobranca = diasAtePrimeiraCobranca;
         this.taxaJuros = taxaJuros;
-        this.dataCriacao = dataCriacao;
-        this.status = status;
+        this.dataCriacao = LocalDateTime.now();
+        this.status = "ATIVA";
         this.interesses = interesses;
         this.emprestimos = emprestimos;
     }

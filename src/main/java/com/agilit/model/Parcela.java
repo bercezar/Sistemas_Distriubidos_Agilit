@@ -42,9 +42,7 @@ public class Parcela {
 
     // Construtor padrão
     public Parcela() {
-        super();
-        this.paga = false;
-        this.atrasada = false;
+        
     }
 
     // Construtor completo
@@ -57,8 +55,8 @@ public class Parcela {
         this.valor = valor;
         this.dataVencimento = dataVencimento;
         this.dataPagamento = dataPagamento;
-        this.paga = paga;
-        this.atrasada = atrasada;
+        this.paga = false;
+        this.atrasada = false;
     }
 
     // Método auxiliar para calcular dias de atraso

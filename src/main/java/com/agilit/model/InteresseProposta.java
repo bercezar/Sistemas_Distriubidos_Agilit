@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
  * Gerencia o fluxo de confirmação bilateral (Credor + Devedor).
  */
 @Entity
-@Table(name = "interesse_proposta",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"proposta_id", "devedor_id"}))
+@Table(name = "interesse_proposta", uniqueConstraints = @UniqueConstraint(columnNames = {"proposta_id", "devedor_id"}))
 public class InteresseProposta {
 
     @Id
@@ -54,11 +53,7 @@ public class InteresseProposta {
 
     // Construtor padrão
     public InteresseProposta() {
-        super();
-        this.dataInteresse = LocalDateTime.now();
-        this.status = "PENDENTE";
-        this.confirmacaoCredor = false;
-        this.confirmacaoDevedor = false;
+
     }
 
     // Construtor completo
@@ -71,21 +66,23 @@ public class InteresseProposta {
         this.id = id;
         this.proposta = proposta;
         this.devedor = devedor;
-        this.dataInteresse = dataInteresse;
-        this.status = status;
+        this.dataInteresse = LocalDateTime.now();
+        this.status = "PENDENTE";
         this.mensagem = mensagem;
-        this.confirmacaoCredor = confirmacaoCredor;
-        this.confirmacaoDevedor = confirmacaoDevedor;
+        this.confirmacaoCredor = false;
+        this.confirmacaoDevedor = false;
         this.dataConfirmacaoCredor = dataConfirmacaoCredor;
         this.dataConfirmacaoDevedor = dataConfirmacaoDevedor;
         this.emprestimo = emprestimo;
     }
+
 
     // Método auxiliar para verificar se ambos confirmaram
     public boolean ambosConfirmaram() {
         return confirmacaoCredor && confirmacaoDevedor;
     }
 
+    
     // Getters e Setters
 
     public Long getId() {

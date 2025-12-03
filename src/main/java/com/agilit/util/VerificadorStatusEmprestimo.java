@@ -1,6 +1,7 @@
 package com.agilit.util;
 
 import com.agilit.config.JPAUtil;
+import com.agilit.controller.emprestimo.StatusEmprestimo;
 import com.agilit.model.Emprestimo;
 import com.agilit.model.Parcela;
 import jakarta.persistence.EntityManager;
@@ -58,11 +59,11 @@ public class VerificadorStatusEmprestimo {
 
         // Atualiza status
         if (emprestimo.todasParcelasPagas()) {
-            emprestimo.setStatus("PAGO");
+            emprestimo.setStatus(StatusEmprestimo.PAGO);
         } else if (emprestimo.temParcelaAtrasada()) {
-            emprestimo.setStatus("ATRASADO");
+            emprestimo.setStatus(StatusEmprestimo.ATRASADO);
         } else {
-            emprestimo.setStatus("EM_ANDAMENTO");
+            emprestimo.setStatus(StatusEmprestimo.EM_ANDAMENTO);
         }
     }
 

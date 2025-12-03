@@ -50,9 +50,7 @@ public class OfertaEmprestimo {
 
     // Construtor padrão
     public OfertaEmprestimo() {
-        super();
-        this.dataCriacao = LocalDateTime.now();
-        this.ativa = true;
+
     }
 
     // Construtor completo
@@ -68,8 +66,8 @@ public class OfertaEmprestimo {
         this.parcelasMaximas = parcelasMaximas;
         this.diasAtePrimeiraCobranca = diasAtePrimeiraCobranca;
         this.taxaJuros = taxaJuros;
-        this.dataCriacao = dataCriacao;
-        this.ativa = ativa;
+        this.dataCriacao = LocalDateTime.now();
+        this.ativa = true;
         this.propostas = propostas;
     }
 

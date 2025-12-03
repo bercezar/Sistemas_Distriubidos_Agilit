@@ -1,5 +1,6 @@
 package com.agilit.model;
 
+import com.agilit.config.PasswordUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -7,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "devedor")
-public class Devedor {
+public class Devedor implements Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,11 +48,15 @@ public class Devedor {
 
     @OneToMany(mappedBy = "devedor", fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Emprestimo> emprestimos;
+    private List<Emprestimo> emprestimosContratados;
+
+    @OneToMany(mappedBy = "devedor", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<InteresseProposta> propostasDesejadas;
 
     // Construtor padrão
     public Devedor() {
-        super();
+    
     }
 
     // Construtor completo
@@ -59,7 +64,7 @@ public class Devedor {
                    String email, String senhaHash, String endereco,
                    String cidade, String estado, String cep,
                    LocalDate dataNascimento, Double renda,
-                   Credor credor, List<Emprestimo> emprestimos) {
+                   Credor credor, List<Emprestimo> emprestimosContratados) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -72,7 +77,7 @@ public class Devedor {
         this.cep = cep;
         this.dataNascimento = dataNascimento;
         this.credor = credor;
-        this.emprestimos = emprestimos;
+        this.emprestimosContratados = emprestimosContratados;
     }
 
     // Getters e Setters
@@ -173,11 +178,31 @@ public class Devedor {
         this.credor = credor;
     }
 
-    public List<Emprestimo> getEmprestimos() {
-        return emprestimos;
+    public List<Emprestimo> getEmprestimosContratados() {
+        return emprestimosContratados;
     }
     
-    public void setEmprestimos(List<Emprestimo> emprestimos) {
-        this.emprestimos = emprestimos;
+    public void setEmprestimosContratados(List<Emprestimo> emprestimosContratados) {
+        this.emprestimosContratados = emprestimosContratados;
+    }
+
+    public List<InteresseProposta> getPropostasDesejadas() {
+        return propostasDesejadas;
+    }
+    
+    public void setPropostasDesejadas(List<InteresseProposta> propostasDesejadas) {
+        this.propostasDesejadas = propostasDesejadas;
+    }
+
+    // Implementação dos métodos da interface Usuario
+    
+    @Override
+    public void setSenha(String senhaPura) {
+        this.senhaHash = PasswordUtil.hash(senhaPura);
+    }
+    
+    @Override
+    public boolean autenticar(String senhaPura) {
+        return PasswordUtil.check(senhaPura, this.senhaHash);
     }
 }

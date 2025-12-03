@@ -47,9 +47,6 @@ public class Notificacao {
 
     // Construtor padrão
     public Notificacao() {
-        super();
-        this.dataCriacao = LocalDateTime.now();
-        this.lida = false;
     }
 
     // Construtor completo
@@ -63,8 +60,8 @@ public class Notificacao {
         this.tipo = tipo;
         this.titulo = titulo;
         this.mensagem = mensagem;
-        this.lida = lida;
-        this.dataCriacao = dataCriacao;
+        this.lida = false;
+        this.dataCriacao = LocalDateTime.now();
         this.dataLeitura = dataLeitura;
         this.referencia = referencia;
         this.tipoReferencia = tipoReferencia;

@@ -2,6 +2,7 @@ package com.agilit.controller.interesse;
 
 import com.agilit.config.AppException;
 import com.agilit.config.JPAUtil;
+import com.agilit.controller.emprestimo.StatusEmprestimo;
 import com.agilit.model.*;
 import com.agilit.util.CalculadoraEmprestimo;
 import com.agilit.util.NotificacaoService;
@@ -498,7 +499,7 @@ public class InteressePropostaController {
             LocalDate.now(), numeroParcelas, proposta.getDiasAtePrimeiraCobranca()
         );
         emprestimo.setDataVencimento(dataVencimento);
-        emprestimo.setStatus("EM_ANDAMENTO");
+        emprestimo.setStatus(StatusEmprestimo.EM_ANDAMENTO);
 
         // Criar parcelas
         List<LocalDate> datasParcelas = CalculadoraEmprestimo.calcularDatasParcelas(
